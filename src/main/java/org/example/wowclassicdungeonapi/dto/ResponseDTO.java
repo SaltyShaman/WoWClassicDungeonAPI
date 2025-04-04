@@ -11,10 +11,10 @@ public class ResponseDTO {
     private String answer;
     private List<Map<String, String>> messages;
 
-    public MyResponse(String answer) {
+    public ResponseDTO(String answer) {
         this.answer = answer;
     }
-    public MyResponse(String answer, List<Map<String,String>> messages) {
+    public ResponseDTO(String answer, List<Map<String,String>> messages) {
         this.answer = answer;
         this.messages = messages;
     }
