@@ -4,7 +4,7 @@ package org.example.wowclassicdungeonapi.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestDTO {
+public class ChatCompletionRequest {
 
     private  String model;
     private List<Message> messages = new ArrayList<>();
