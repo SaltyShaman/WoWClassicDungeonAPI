@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class WoWClassicDungeonApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WoWClassicDungeonApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WoWClassicDungeonApiApplication.class, args);
+    }
 
 }
