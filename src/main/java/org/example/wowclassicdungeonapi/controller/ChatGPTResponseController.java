@@ -25,8 +25,11 @@ public class ChatGPTResponseController {
         this.openAIService = openAIService;
     }
 
-    @GetMapping
+    @GetMapping("/v1/joke")
     public MyResponse getAnswer(@RequestParam String about) {
-        return openAIService.makeRequest(about,SYSTEM_MESSAGE);
+        return openAIService.makeRequest(about, SYSTEM_MESSAGE);
     }
+
+
+
 }
