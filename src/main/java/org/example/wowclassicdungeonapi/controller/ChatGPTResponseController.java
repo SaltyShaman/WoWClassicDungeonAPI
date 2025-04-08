@@ -1,6 +1,5 @@
 package org.example.wowclassicdungeonapi.controller;
 
-
 import org.example.wowclassicdungeonapi.dto.MyResponse;
 import org.example.wowclassicdungeonapi.service.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
