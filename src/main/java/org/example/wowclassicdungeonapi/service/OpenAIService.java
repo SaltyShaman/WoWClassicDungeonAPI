@@ -110,4 +110,47 @@ public class OpenAIService {
         }
     }
 
+
+    public String askGPT(String userPrompt) {
+        ChatCompletionRequest requestDto = new ChatCompletionRequest();
+        requestDto.setModel(MODEL);
+        requestDto.setTemperature(TEMPERATURE);
+        requestDto.setMax_tokens(MAX_TOKENS);
+        requestDto.setTop_p(TOP_P);
+        requestDto.setFrequency_penalty(FREQUENCY_PENALTY);
+        requestDto.setPresence_penalty(PRESENCE_PENALTY);
+        requestDto.getMessages().add(new ChatCompletionRequest.Message("system", "You are a helpful assistant."));
+        requestDto.getMessages().add(new ChatCompletionRequest.Message("user", userPrompt));
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(requestDto);
+            ChatCompletionResponse response = client.post()
+                    .uri(new URI(URL))
+                    .header("Authorization", "Bearer " + OPENAPIKEY)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .body(BodyInserters.fromValue(json))
+                    .retrieve()
+                    .bodyToMono(ChatCompletionResponse.class)
+                    .block();
+
+            if (response != null && response.getChoices() != null && !response.getChoices().isEmpty()) {
+                return response.getChoices().get(0).getMessage().getContent();
+            } else {
+                return "No response received from OpenAI.";
+            }
+        } catch (WebClientResponseException e) {
+            logger.error("OpenAI API Error: {}", e.getResponseBodyAsString());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "OpenAI API error: " + e.getResponseBodyAsString());
+        } catch (Exception e) {
+            logger.error("Unexpected error when calling OpenAI", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Unexpected error when calling OpenAI: " + e.getMessage());
+        }
+    }
+
+
 }
